@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>备忘录</title>
+   <!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+  <style>
+    html {
+      font:normal normal 12px '微软雅黑'
+    }
+    a {
+      color:brown;
+      text-decoration: none
+    }
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul > li {
+      line-height: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    class MyNote extends React.Component{
+      // notes表示所有的备忘信息，note表示与表单绑定的备忘信息,index表示notes中备忘录的数量
+      constructor(props){
+        super(props);
+        this.state = {
+          notes:[],
+          note:{
+            content:''
+          },
+          index:0,
+          keywords:''
+        }
+      }
+      // 每当表单项的值发生改变的时候将表单项值的状态与state中note绑定在一起
+      handleChange=(event)=>{
+        let name = event.target.name;
+        let val = event.target.value;
+        this.setState({
+          note:{
+            [name]:val
+          }
+        })
+      }
+      // 处理表单提交的回调函数
+      handleSubmit=(event)=>{
+        this.state.note.id = this.state.index + 1;
+        this.state.notes.push(this.state.note);
+        // 设置state值
+        this.setState({
+          notes:this.state.notes,
+          note:{
+            content:''
+          },
+          index:this.state.index+1
+        })
+        // 阻止事件默认行为
+        event.preventDefault();
+      }
+      
+      // 删除备忘
+      removeNote=(id,event)=>{
+        // 进行过滤
+        let result = this.state.notes.filter(item=>item.id!=id)
+        this.setState({
+          notes:result
+        })
+        event.preventDefault();
+      }
+
+      // 查找
+      handleSearch=(event)=>{
+        let keywords = event.target.value;
+        this.setState({
+          keywords:keywords
+        })
+
+      }
+
+      render(){
+        return (
+          <div>
+            {/*JSON.stringify(this.state)*/}
+            {/* 表单*/}
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <input type="text" name="content" value={this.state.note.content} onChange={this.handleChange}/>
+                <input type="submit" value="保存"/>
+              </form>
+            </div>
+            <div>
+              <input 
+                type="text" 
+                placeholder="请输入关键字" 
+                onChange={this.handleSearch}
+                style={{border:'none','borderBottom':'1px solid #ccc'}}/>
+            </div>
+            {/* 列表项*/}
+            <ul>
+              {
+                // 先过滤，再返回
+                this.state.notes
+                .filter(item=>item.content.indexOf(this.state.keywords)>=0)
+                .map((item,index)=>{
+                  return (
+                    <li key={item.id}>
+                      {index+1}, 
+                      {item.content},
+                      <a href="#" onClick={this.removeNote.bind(this,item.id)}>delete</a>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<MyNote/>,document.getElementById('app'));
+  </script>
+</body>
+</html>

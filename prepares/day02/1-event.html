@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定</title>
+	<!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		
+	</div>
+	<script type='text/babel'>
+  class MyDiv extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {status : true}
+      // 如果要在回调函数中调用this，这行代码不能省略
+      // this.toggle = this.toggle.bind(this);
+    }
+    // 事件处理函数
+    /*
+    toggle(){
+      this.setState(state=>({
+        status:!state.status
+      }));
+    }
+    */
+    toggle = (id,e)=>{
+      this.setState(state=>({
+        status:!state.status
+      }));
+    }
+    // 渲染
+    render(){
+      return (
+        // <div onClick={this.toggle.bind(this,1)}>
+        <div onClick={(e)=>this.toggle(1,e)}>
+          {this.state.status.toString()} , {this.state.status?'NO':'OFF'}
+        </div>
+      )
+    }
+  }
+
+  ReactDOM.render(<MyDiv/>,document.getElementById('app'));
+
+
+
+
+	</script>
+	
+	
+</body>
+</html>

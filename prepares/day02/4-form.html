@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>表单</title>
+  <!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  
+  <script type="text/babel">
+    class MyForm extends React.Component{
+      constructor(props){
+        super(props);
+        this.state = {
+          username:'',
+          password:'',
+          gender:'男',
+          address:'山西',
+          description:''
+        };
+      }
+      handleSubmit=(event)=>{
+        console.log(this.state);
+        event.preventDefault();
+      }
+
+      handleChange=(event)=>{
+        let name = event.target.name;
+        let value = event.target.value;
+        this.setState((state)=>({
+            [name]:value
+        }))
+      }
+
+      render(){
+        return (
+          <form onSubmit={this.handleSubmit}>
+            {JSON.stringify(this.state)} 
+            <hr/>
+            用户名: 
+            <input 
+              type="text" 
+              name="username" 
+              value={this.state.username} 
+              onChange={this.handleChange}/> <br/>
+            密码: 
+            <input 
+              type="password" 
+              name="password" 
+              value={this.state.password}
+              onChange={this.handleChange}/><br/>
+            性别：
+            <label>
+              <input 
+                type="radio" 
+                name="gender" 
+                value="男"
+                onChange={this.handleChange} 
+                checked={this.state.gender=="男"?true:false}/>男
+            </label>
+            <label>
+              <input 
+                type="radio" 
+                name="gender" 
+                value="女"
+                onChange={this.handleChange}  
+                checked={this.state.gender=="女"?true:false}/>女
+            </label><br/>
+            地址:
+            <select name="address" 
+              value={this.state.address} 
+              onChange={this.handleChange}>
+              <option value="江苏">江苏</option>
+              <option value="山西">山西</option>
+              <option value="河南">河南</option>
+              <option value="陕西">陕西</option>
+            </select>  <br/>
+            介绍：
+            <textarea 
+              name="description"
+              value={this.state.description} 
+              onChange={this.handleChange}></textarea> <br/>
+            <input type="submit" value="保存"/> 
+          </form>
+        )
+      }
+    }
+
+
+
+    ReactDOM.render(
+      <MyForm></MyForm>,
+      document.getElementById('app')
+    )
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-列表渲染</title>
+	<!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		
+	</div>
+  <script type='text/babel'>
+    class MyList extends React.Component{
+      render(){
+        let data = this.props.data;
+        // 产生列表渲染
+        let listItems = data.map(item => 
+          <li key={item.id}>{item.name}</li>
+        )
+        // 列表项封装到jsx中返回
+        return (
+          <ul>
+            {listItems}
+          </ul>
+        );
+      }
+    }
+
+    let arr = [{
+      id:1,
+      name:'terry'
+    },{
+      id:2,
+      name:'larry'
+    }]
+		ReactDOM.render(
+      <MyList data={arr}/>,
+      document.getElementById('app')
+    );
+	</script>
+	
+	
+</body>
+</html>

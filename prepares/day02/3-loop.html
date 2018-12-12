@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定</title>
+	<!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type='text/babel'>
+  class MyList extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {users:[]}
+    }
+    // 组件绑定的时候为state赋值
+    componentDidMount(){
+      this.setState(state=>({
+        users:[{id:1,name:'tom'},{id:2,name:'jacky'},{id:3,name:'lisa'}]
+      }))
+    }
+    // 列表渲染，先将列表渲染到一个变量中,然后再设置到ul标签中进行返回
+    render(){
+      let list = this.state.users;
+      return (
+        <ul>
+          {
+            list.map((item)=>{
+              return (<li key={item.id}>{item.name}</li>)
+            })
+          }
+        </ul>
+      )
+
+      /*
+      let list = this.state.users.map((item)=>{
+        return (
+          // key属性帮助react识别每个li，在添加节点，移除节点，修改节点的时候都会用到，一般要唯一标识
+          <li key={item.id}>{item.name}</li>
+        );
+      })
+      return (
+        <ul>{list}</ul>
+      )
+      */
+    }
+  }
+  ReactDOM.render(<MyList/>,document.getElementById('app'));
+	</script>
+</body>
+</html>

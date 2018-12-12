@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定</title>
+	<!-- 导入react/react-dom/bebel -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		
+	</div>
+  <script type='text/babel'>
+  // 用户登录成功后，将用户设置为全局变量
+  window.user = {name:"terry"}
+
+  class MyDiv extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {user : null}
+    }
+    // 用户点击登录按钮时候执行该函数，该函数中修改state中user的取值。并且阻止事件的默认行为
+    login=(event)=>{
+      this.setState({
+        user:window.user
+      })
+      event.preventDefault();
+    }
+    // 渲染，当state中维护的user为不存在的时候，显示"请登录"，否则显示"欢迎您,xxx"
+    render(){
+      if(this.state.user){
+        return (
+          <div>欢迎您，{this.state.user.name } </div>
+        )
+      } else {
+        return (
+          <div>
+            <a href="#" onClick={this.login}>请登录</a>
+          </div>
+        )
+      }
+    }
+  }
+
+  ReactDOM.render(<MyDiv/>,document.getElementById('app'));
+
+
+
+
+	</script>
+	
+	
+</body>
+</html>

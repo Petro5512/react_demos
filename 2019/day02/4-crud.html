@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hello world</title>
+	<!-- 导入react -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<!-- 导入react-dom -->
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<!-- 导入babel -->
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+  <script type='text/babel'>
+    
+    // 教师管理
+    class Teacher extends React.Component{
+      render(){
+        return (
+          <div className='teacher'>
+            教师管理
+          </div>
+        )
+      }
+    }
+
+    // 学生管理
+    class Student extends React.Component{
+      constructor(props){
+        super(props);
+        this.state = {
+          students : [{
+            id:1,
+            name:'terry'
+          }]
+        }
+      }
+      render(){
+        let {state,props} = this;
+        return (
+          <div className='student'>
+            <h2>学生管理</h2>
+            <div>
+              <button>添加</button>
+              <input type="search" placeholder='关键字'/>
+            </div>
+            <div>
+              <form>
+                姓名: <input type="text"/>
+                <input type="submit"/>
+              </form>
+            </div>
+            <ul>
+            {
+              state.students.map((item)=>{
+                return <li key={item.id}>
+                  {item.name}
+                  <a href="#">删除</a>
+                </li>
+              })
+            }
+            </ul>
+          </div>
+        )
+      }
+    }
+
+
+		ReactDOM.render(
+      <Student/>,
+      document.getElementById('app')
+    );
+	</script>
+</body>
+</html>

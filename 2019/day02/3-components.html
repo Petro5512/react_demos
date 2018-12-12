@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件</title>
+	<!-- 导入react -->
+	<script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+	<!-- 导入react-dom -->
+	<script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+	<!-- 导入babel -->
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+  <script type='text/babel'>
+    let a = <h1>hello world</h1>;
+
+    //1. 函数组件 函数名首字母必须大写
+    function MyComponent(props){
+      return <h1>hello world，{props.name}</h1>
+    }
+    //2. 类组件 new Vue({data,methods,created,props...})
+    class MyDiv extends React.Component{
+      // 构造函数 初始化state
+      // 定义事件处理函数
+      // 使用生命周期钩子函数
+      // 重写渲染方法,该方法务必返回一个jsx，用于页面显示
+      render(){
+        // 映射
+        let props = this.props;
+        return (
+          <div>
+            {props.msg},
+            {props.disabled.toString()},
+            {props.num}
+          </div>
+        )
+      }
+    }
+
+    class MyUl extends React.Component{
+      render(){
+        return (
+          <ul>
+            {
+              this.props.users.map((item,index)=>{
+                return <li key={index}>{item}</li>
+              })
+            }
+          </ul>
+        )
+      }
+    }
+
+    class MyHeader extends React.Component{
+      // 构造函数，定义state,相当于vue中data
+      constructor(props){
+        super(props)
+        // 定义组件实例自身变量
+        this.state = {
+          user:{
+            username:'terry'
+          }
+        }
+      }
+
+      render(){
+        let user = this.state.user;
+        // 条件渲染
+        if(user){
+          return <h2>欢迎您{user.username}</h2>
+        } else {
+          return <a href='#'>登录</a>
+        }
+      }
+    }
+
+		ReactDOM.render(
+      <div>
+        <MyDiv num={2} disabled msg='hello this is props msg'/>
+        <MyUl users={[4,1,6,4,3,2]}/>
+        <MyHeader/>
+      </div>,
+      document.getElementById('app')
+    );
+	</script>
+</body>
+</html>
