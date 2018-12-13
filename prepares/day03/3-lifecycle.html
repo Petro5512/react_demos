@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+    <!-- 导入react -->
+    <script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+    <!-- 导入react-dom -->
+    <script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+    <!-- 导入babel -->
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type='text/babel'>
+    class MyDiv extends React.Component{
+      constructor(props){
+        super(props);
+        this.state = {
+          msg:'hello myDiv'
+        }
+      }
+      componentWillMount(){
+        console.log('componentWillMount');
+      }
+      componentDidMount(){
+        this.setState({
+          msg:'你好，myDiv'
+        })
+        console.log('componentDidMount');
+      }
+      shouldComponentUpdate(){
+        console.log('shouldComponentUpdate');
+        return true;
+      }
+      componentWillUpdate(){
+        console.log('componentWillUpdate');
+      }
+      componentDidUpdate(){
+        console.log('componentDidUpdate');
+      }
+      componentWillUnmount(){
+        console.log('componentWillUnmount');
+      }
+      render(){
+        console.log('render');
+        return (
+          <div>{this.state.msg},{this.props.name}</div>
+        )
+      }
+    }
+    
+    MyDiv.defaultProps = {
+      name:'terry'
+    }
+
+    ReactDOM.render(
+      <MyDiv name='jacky'/>,
+      document.getElementById('app')
+    );
+    </script>
+</body>
+</html>

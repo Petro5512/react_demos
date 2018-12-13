@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+    <!-- 导入react -->
+    <script src="https://cdn.bootcss.com/react/16.6.0/umd/react.development.js"></script>
+    <!-- 导入react-dom -->
+    <script src="https://cdn.bootcss.com/react-dom/16.6.0/umd/react-dom.development.js"></script>
+    <!-- 导入babel -->
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type='text/babel'>
+      // 组件定义 （组件 html,css,js） 自定义标签
+      class MyDiv extends React.Component {
+        constructor(props){
+          super(props);
+          // 实例变量 getInitialState() 
+          this.state = {
+            msg:'你好，react组件',
+            students:[]
+          }
+          console.log('constructor');
+          setInterval(() => {
+            console.log('interval...');
+            this.setState({
+              msg:'.'+this.state.msg
+            })
+          }, 3000);
+        }
+
+        // 声明周期
+        //组件绑定之前， 可以访问props/state，并且可以修改state
+        componentWillMount(){
+          console.log(this.props);
+          console.log(this.state);
+          this.setState({
+            msg:'componentWillMount'
+          })
+          // alert('componentWillMount');
+        }
+        //组件绑定之后，可以修改state,实现初始化渲染
+        componentDidMount(){
+          this.setState({
+            msg:'componentDidMount'
+          })
+          // alert('componentDidMount');
+        }
+        // state改变 -> 判断是否应该重新渲染? -> componentWillUpdate->render()->componentDidUpdate
+        shouldComponentUpdate(a,b){
+         // alert('shouldComponentUpdate');
+          return true;
+        }
+        componentWillUpdate(){
+          // alert('componentWillUpdate');
+        }
+        componentDidUpdate(){
+          // alert('componentDidUpdate');
+        }
+        // 成员方法(事件处理函数)
+        
+        // 重写父类方法
+        render(){
+          // alert('render');
+          // es6解构机制
+          let {msg} = this.state;
+          return (
+            <div>
+              <h1>{msg}</h1>
+              <div>{this.props.name}</div>
+            </div>
+          )
+        }
+      }
+      // 静态变量
+      MyDiv.defaultProps = {
+        name:'默认值'
+      }
+    
+      // 组件渲染
+      ReactDOM.render(
+         <MyDiv name='非默认值'/>,
+         document.getElementById('app')
+       )
+
+
+    </script>
+</body>
+</html>
